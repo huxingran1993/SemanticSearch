@@ -14,14 +14,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/element")
+@RequestMapping("/api/relation")
 public class RelationController {
     private Logger LOGGER = LoggerFactory.getLogger(this.getClass());
 
     @Autowired
     private RelationService relationService;
 
-    @PostMapping("/create")
+    @PostMapping("/createRelation")
     public void createRelation(@Validated @RequestBody Relation relation){
         relationService.create(relation);
 
