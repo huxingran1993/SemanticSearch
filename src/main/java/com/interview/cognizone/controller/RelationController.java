@@ -13,11 +13,13 @@ import org.springframework.web.bind.annotation.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/api")
 public class RelationController {
     private Logger LOGGER = LoggerFactory.getLogger(this.getClass());
+    private List<Relation> allRelations = new ArrayList<>();
 
     @Autowired
     private RelationService relationService;
@@ -101,6 +103,7 @@ public class RelationController {
             });
 
             relations.addAll(relations_copy);
+            relations.forEach(allRelations::add);
 
             if (relations.isEmpty()){
                 return new ResponseEntity<>(HttpStatus.NO_CONTENT);
@@ -155,5 +158,29 @@ public class RelationController {
         return rel;
     }
 
+    /**
+     * Task 9  Create UI for path search
+     * */
+    @GetMapping("/pathSearch/{source}/{target}")
+    public void pathSearch(@PathVariable String source, @PathVariable String target){
+        String next, path , relation;
+        List<Relation> relations = new ArrayList<>();
+        relationService.getAllRelation().forEach(relations::add);
+        getInverseRelation();
+        LOGGER.info("Size of allRelation: " + allRelations.size());
+        for (int i = 0; i<allRelations.size();i++){
+            if (source.equals(allRelations.get(i).getW1())){
+                next = allRelations.get(i).getW2();
+                String finalNext = next;
+                List<Relation> nextPair = allRelations.stream().filter(e -> e.getW1().equals(finalNext)).collect(Collectors.toList());
+                LOGGER.info("Last pair: "+ nextPair.toString());
+                List<Relation> lastPair = nextPair.stream().filter(e -> !e.getW2().equals(source)).collect(Collectors.toList());
+                relation = lastPair.get(0).getR();
+                path = source + " ==("+ allRelations.get(i).getR()+")=> "+ next+ " ==("+relation+")=> "+target;
+
+                LOGGER.info("Path: "+ path);
+            }
+        }
+    }
 
 }
