@@ -14,24 +14,32 @@ import java.util.ArrayList;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/relation")
+@RequestMapping("/api")
 public class RelationController {
     private Logger LOGGER = LoggerFactory.getLogger(this.getClass());
 
     @Autowired
     private RelationService relationService;
 
-    @PostMapping("/createRelation")
-    public void createRelation(@Validated @RequestBody Relation relation){
-        relationService.create(relation);
 
+    @PostMapping("/createRelation")
+    public void addRelation(@Validated @RequestBody Relation relation){
+        relationService.createRelation(relation);
     }
 
     @GetMapping("/getAllRelation")
     public ResponseEntity<List<Relation>> getAllRelation(){
-        List<Relation> relations = new ArrayList<>();
-        relationService.getAllRelation().forEach(relations::add);
-        return new ResponseEntity<>(relations, HttpStatus.OK);
+        try {
+            List<Relation> relations = new ArrayList<>();
+            relationService.getAllRelation().forEach(relations::add);
+            if (relations.isEmpty()){
+                return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+            }
+            return new ResponseEntity<>(relations, HttpStatus.OK);
+        }catch (Exception e){
+            return new ResponseEntity<>(null,HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+
     }
 
 }
