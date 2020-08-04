@@ -7,12 +7,14 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.util.StringUtils;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/api")
@@ -81,7 +83,6 @@ public class RelationController {
             relationService.getAllRelation().forEach(relations::add);
             relationService.getAllRelation().forEach(relations_copy::add);
 
-            //relations_copy = relations;
             for (int i = 0;i<relations_copy.size();i++){
                 String W3 = relations_copy.get(i).getW1();
                 relations_copy.get(i).setW1(relations_copy.get(i).getW2());
@@ -100,4 +101,29 @@ public class RelationController {
         }
     }
 
+    /**
+     * Task 5: Lowercase all words
+     * */
+    @GetMapping("/getAllInLowercase")
+    public ResponseEntity<List<Relation>> getRelationInLowercase(){
+        try {
+            List<Relation> relations = new ArrayList<>();
+            relationService.getAllRelation().forEach(relations::add);
+            relations.forEach(e ->{
+                e.setW1(e.getW1().toLowerCase());
+                e.setW2(e.getW2().toLowerCase());
+                e.setR(e.getR().toLowerCase());
+                e.getW1().trim();
+                e.getW2().trim();
+                e.getR().trim();
+            });
+
+            if (relations.isEmpty()){
+                return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+            }
+            return new ResponseEntity<>(relations, HttpStatus.OK);
+        }catch (Exception e){
+            return new ResponseEntity<>(null,HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
 }
