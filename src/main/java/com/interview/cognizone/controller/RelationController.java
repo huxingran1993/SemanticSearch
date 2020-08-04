@@ -24,10 +24,23 @@ public class RelationController {
 
     /**
      * Task 1: Create relations between words
+     *        &
+     * Task 8: Inverse relation check
      * */
     @PostMapping("/createRelation")
     public void addRelation(@Validated @RequestBody Relation relation){
-        relationService.createRelation(relation);
+        boolean s = true;
+        List<Relation> relations = new ArrayList<>();
+        relationService.getAllRelation().forEach(relations::add);
+
+        for (int i =0; i < relations.size();i++){
+            if (relation.getW1().equals(relations.get(i).getW2()) && relation.getW2().equals(relations.get(i).getW1())) {
+                LOGGER.error("Error!!!Adding the inverse relation!");
+                s = false;
+                }
+        }
+        if (s) relationService.createRelation(relation);
+
     }
 
     /**
@@ -141,4 +154,6 @@ public class RelationController {
         relationService.createRelation(rel);
         return rel;
     }
+
+
 }
