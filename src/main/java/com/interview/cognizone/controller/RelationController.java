@@ -10,6 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -163,30 +164,45 @@ public class RelationController {
      * */
     @GetMapping("/pathSearch/{source}/{target}")
     public void pathSearch(@PathVariable String source, @PathVariable String target){
-        String next, path , relation;
-        boolean shortRelation = false;
+        String next, path;
         List<Relation> relations = new ArrayList<>();
         relationService.getAllRelation().forEach(relations::add);
         getInverseRelation();
         LOGGER.info("Size of allRelation: " + allRelations.size());
+
         for (int i = 0; i<allRelations.size();i++){
             if (source.equals(allRelations.get(i).getW1())){
                 next = allRelations.get(i).getW2();
-                String finalNext = next;
-                List<Relation> nextPair = allRelations.stream().filter(e -> e.getW1().equals(finalNext)).collect(Collectors.toList());
-                LOGGER.info("Last pair: "+ nextPair.toString());
-                if (nextPair.size()<=1){
-                    path = source + " ==("+ allRelations.get(i).getR()+")=> "+ target;
-                }
-                else {
-                    List<Relation> lastPair = nextPair.stream().filter(e -> !e.getW2().equals(source)).collect(Collectors.toList());
-                    relation = lastPair.get(0).getR();
-                    path = source + " ==("+ allRelations.get(i).getR()+")=> "+ next+ " ==("+relation+")=> "+target;
+                List<Relation> nextPair = getPairs(next);
+                path = source + " ==("+ allRelations.get(i).getR()+")=> "+ next;
+
+                while (getNumber(next)==2){
+                    String medium = next;
+                    next = getNextWord(source, next);
+                    path = path + " ==("+getRelation(medium,source)+")=> "+next;
+                    source = medium;
                 }
                 LOGGER.info("Path: "+ path);
                 allRelations.clear();
             }
         }
+    }
+
+    public List<Relation> getPairs(String w){
+        return allRelations.stream().filter(e -> e.getW1().equals(w)).collect(Collectors.toList());
+    }
+
+    public int getNumber(String w){
+        List<Relation> nextPair = getPairs(w);
+        return nextPair.size();
+    }
+
+    public String getNextWord(String pre, String w){
+        return getPairs(w).stream().filter(e -> !e.getW2().equals(pre)).collect(Collectors.toList()).get(0).getW2();
+    }
+
+    public String getRelation(String pre, String w){
+        return getPairs(pre).stream().filter(e -> !e.getW2().equals(w)).collect(Collectors.toList()).get(0).getR();
     }
 
 }
