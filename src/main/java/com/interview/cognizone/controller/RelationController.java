@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/api")
@@ -124,6 +125,20 @@ public class RelationController {
         }
     }
 
-
-
+    /**
+     * Task 7: Adding another relation between two word will fail.
+     * */
+    @PutMapping("/addRelation/{id}")
+    public Relation addRelation(@PathVariable String id, @RequestBody Relation relation) {
+        Optional<Relation> optionalRelation = relationService.getById(id);
+        Relation rel = optionalRelation.get();
+        if (relation.getR().equals(rel.getR())){
+            rel.setR(relation.getR());
+            LOGGER.info("Its ok not change the relation");
+        }else {
+            LOGGER.error("Can not add different relation!!");
+        }
+        relationService.createRelation(rel);
+        return rel;
+    }
 }
