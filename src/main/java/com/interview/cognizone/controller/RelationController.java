@@ -7,14 +7,11 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.util.StringUtils;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/api")
@@ -79,18 +76,18 @@ public class RelationController {
         try {
             List<Relation> relations = new ArrayList<>();
             List<Relation> relations_copy = new ArrayList<>();
-            List<Relation> swapWord = new ArrayList<>();
+
             relationService.getAllRelation().forEach(relations::add);
             relationService.getAllRelation().forEach(relations_copy::add);
 
-            for (int i = 0;i<relations_copy.size();i++){
-                String W3 = relations_copy.get(i).getW1();
-                relations_copy.get(i).setW1(relations_copy.get(i).getW2());
-                relations_copy.get(i).setW2(W3);
-                swapWord.add(relations_copy.get(i));
-            }
+            relations_copy.forEach(e -> {
+                String w3 = e.getW1();
+                e.setW1(e.getW2());
+                e.setW2(w3);
+            });
 
-            relations.addAll(swapWord);
+            relations.addAll(relations_copy);
+
             if (relations.isEmpty()){
                 return new ResponseEntity<>(HttpStatus.NO_CONTENT);
             }
