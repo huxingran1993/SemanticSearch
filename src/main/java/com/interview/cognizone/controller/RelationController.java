@@ -164,6 +164,7 @@ public class RelationController {
     @GetMapping("/pathSearch/{source}/{target}")
     public void pathSearch(@PathVariable String source, @PathVariable String target){
         String next, path , relation;
+        boolean shortRelation = false;
         List<Relation> relations = new ArrayList<>();
         relationService.getAllRelation().forEach(relations::add);
         getInverseRelation();
@@ -174,11 +175,18 @@ public class RelationController {
                 String finalNext = next;
                 List<Relation> nextPair = allRelations.stream().filter(e -> e.getW1().equals(finalNext)).collect(Collectors.toList());
                 LOGGER.info("Last pair: "+ nextPair.toString());
-                List<Relation> lastPair = nextPair.stream().filter(e -> !e.getW2().equals(source)).collect(Collectors.toList());
-                relation = lastPair.get(0).getR();
-                path = source + " ==("+ allRelations.get(i).getR()+")=> "+ next+ " ==("+relation+")=> "+target;
+                List<Relation> checkLength = nextPair.stream().filter(e ->e.getW2().equals(source)).collect(Collectors.toList());
+                if (checkLength.size()==1){
+                    path = source + " ==("+ allRelations.get(i).getR()+")=> "+ next;
+                    LOGGER.info("Path: "+ path);
+                }else {
+                    List<Relation> lastPair = nextPair.stream().filter(e -> !e.getW2().equals(source)).collect(Collectors.toList());
+                    relation = lastPair.get(0).getR();
+                    path = source + " ==("+ allRelations.get(i).getR()+")=> "+ next+ " ==("+relation+")=> "+target;
+                    LOGGER.info("Path: "+ path);
+                    allRelations.clear();
+                }
 
-                LOGGER.info("Path: "+ path);
             }
         }
     }
