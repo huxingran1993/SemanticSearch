@@ -69,6 +69,35 @@ public class RelationController {
             return ResponseEntity.notFound().build();
         }
     }
+    /**
+     * Task 4: Checkbox to also show inverse relations
+     * */
+    @GetMapping("/showInverse")
+    public ResponseEntity<List<Relation>> getInverseRelation(){
+        try {
+            List<Relation> relations = new ArrayList<>();
+            List<Relation> relations_copy = new ArrayList<>();
+            List<Relation> swapWord = new ArrayList<>();
+            relationService.getAllRelation().forEach(relations::add);
+            relationService.getAllRelation().forEach(relations_copy::add);
 
+            //relations_copy = relations;
+            for (int i = 0;i<relations_copy.size();i++){
+                String W3 = relations_copy.get(i).getW1();
+                relations_copy.get(i).setW1(relations_copy.get(i).getW2());
+                relations_copy.get(i).setW2(W3);
+                swapWord.add(relations_copy.get(i));
+            }
+
+            relations.addAll(swapWord);
+            if (relations.isEmpty()){
+                return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+            }
+
+            return new ResponseEntity<>(relations, HttpStatus.OK);
+        }catch (Exception e){
+            return new ResponseEntity<>(null,HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
 
 }
