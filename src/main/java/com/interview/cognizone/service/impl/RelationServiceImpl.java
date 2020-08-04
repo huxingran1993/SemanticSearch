@@ -5,6 +5,8 @@ import com.interview.cognizone.repository.RelationRepository;
 import com.interview.cognizone.service.RelationService;
 import org.springframework.stereotype.Service;
 import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class RelationServiceImpl implements RelationService {
@@ -23,6 +25,18 @@ public class RelationServiceImpl implements RelationService {
     @Override
     public Relation createRelation(Relation relation){
         return relationRepository.save(relation);
+    }
+
+    @Override
+    public List<Relation> getByR(String R) {
+        relationList = getAllRelation();
+        List<Relation> findByR = relationList.stream().filter(relation -> relation.getR().equals(R)).collect(Collectors.toList());
+        return findByR;
+    }
+
+    @Override
+    public Optional<Relation> getById(String id) {
+        return relationRepository.findById(id);
     }
 
 //    @PostConstruct
