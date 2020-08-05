@@ -10,7 +10,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
-import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -173,13 +172,13 @@ public class RelationController {
         for (int i = 0; i<allRelations.size();i++){
             if (source.equals(allRelations.get(i).getW1())){
                 next = allRelations.get(i).getW2();
-                List<Relation> nextPair = getPairs(next);
                 path = source + " ==("+ allRelations.get(i).getR()+")=> "+ next;
 
                 while (getNumber(next)==2){
                     String medium = next;
                     next = getNextWord(source, next);
                     path = path + " ==("+getRelation(medium,source)+")=> "+next;
+                    if (next.equals(target)) break;
                     source = medium;
                 }
                 LOGGER.info("Path: "+ path);
