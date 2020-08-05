@@ -187,6 +187,31 @@ public class RelationController {
         }
     }
 
+    /**
+     * Task 10: Bonus task
+     * */
+    @GetMapping("/getTransitiveRelation/{source}/{target}")
+    public void getTransitiveRelation(@PathVariable String source, @PathVariable String target){
+        String next, transitiveRelation = null;
+        List<Relation> relations = new ArrayList<>();
+        relationService.getAllRelation().forEach(relations::add);
+        getInverseRelation();
+        for (int i = 0; i<allRelations.size();i++){
+            if (source.equals(allRelations.get(i).getW1())){
+                next = allRelations.get(i).getW2();
+                while (getNumber(next)==2){
+                    String medium = next;
+                    next = getNextWord(source, next);
+                    transitiveRelation = getRelation(medium,source);
+                    if (next.equals(target)) break;
+                    source = medium;
+                }
+                LOGGER.info("TransitiveRelation: "+ transitiveRelation);
+                allRelations.clear();
+            }
+        }
+    }
+
     public List<Relation> getPairs(String w){
         return allRelations.stream().filter(e -> e.getW1().equals(w)).collect(Collectors.toList());
     }
