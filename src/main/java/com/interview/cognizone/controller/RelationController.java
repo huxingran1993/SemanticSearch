@@ -10,6 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import java.security.SecureRandom;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -20,6 +21,7 @@ import java.util.stream.Collectors;
 public class RelationController {
     private Logger LOGGER = LoggerFactory.getLogger(this.getClass());
     private List<Relation> allRelations = new ArrayList<>();
+    private String t;
 
     @Autowired
     private RelationService relationService;
@@ -163,7 +165,7 @@ public class RelationController {
      * */
     @GetMapping("/pathSearch/{source}/{target}")
     public void pathSearch(@PathVariable String source, @PathVariable String target){
-        String next, path;
+        String next , path;
         List<Relation> relations = new ArrayList<>();
         relationService.getAllRelation().forEach(relations::add);
         getInverseRelation();
@@ -171,12 +173,17 @@ public class RelationController {
 
         for (int i = 0; i<allRelations.size();i++){
             if (source.equals(allRelations.get(i).getW1())){
-                next = allRelations.get(i).getW2();
+                List<Relation> nextWords = getAllNextWords(source);
+                if (!nextWords.isEmpty()){
+                    next = nextWords.get(0).getW2();
+                }else next = allRelations.get(i).getW2();
+
                 path = source + " ==("+ allRelations.get(i).getR()+")=> "+ next;
 
                 while (getNumber(next)==2){
                     String medium = next;
                     next = getNextWord(source, next);
+                    t = getRelation(medium,source);
                     path = path + " ==("+getRelation(medium,source)+")=> "+next;
                     if (next.equals(target)) break;
                     source = medium;
@@ -192,24 +199,9 @@ public class RelationController {
      * */
     @GetMapping("/getTransitiveRelation/{source}/{target}")
     public void getTransitiveRelation(@PathVariable String source, @PathVariable String target){
-        String next, transitiveRelation = null;
-        List<Relation> relations = new ArrayList<>();
-        relationService.getAllRelation().forEach(relations::add);
-        getInverseRelation();
-        for (int i = 0; i<allRelations.size();i++){
-            if (source.equals(allRelations.get(i).getW1())){
-                next = allRelations.get(i).getW2();
-                while (getNumber(next)==2){
-                    String medium = next;
-                    next = getNextWord(source, next);
-                    transitiveRelation = getRelation(medium,source);
-                    if (next.equals(target)) break;
-                    source = medium;
-                }
-                LOGGER.info("TransitiveRelation: "+ transitiveRelation);
-                allRelations.clear();
-            }
-        }
+        pathSearch(source,target);
+        LOGGER.info("TransitiveRelation between "+ source + " "+ target +" is: " + t);
+
     }
 
     public List<Relation> getPairs(String w){
@@ -223,6 +215,10 @@ public class RelationController {
 
     public String getNextWord(String pre, String w){
         return getPairs(w).stream().filter(e -> !e.getW2().equals(pre)).collect(Collectors.toList()).get(0).getW2();
+    }
+
+    public List<Relation> getAllNextWords(String w) {
+        return getPairs(w).stream().filter(e -> getNumber(e.getW2())==2).collect(Collectors.toList());
     }
 
     public String getRelation(String pre, String w){
