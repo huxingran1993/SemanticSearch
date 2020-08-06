@@ -1,6 +1,8 @@
 ## Introduction
 
-This application developed based on the 10 tasks below.\
+This application developed based on the 10 tasks below.
+
+Spring Boot + MongoDB + PostMan 
 
 ### Key point: 
 * Using Lambda Expressions
