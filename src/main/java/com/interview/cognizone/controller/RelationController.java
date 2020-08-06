@@ -20,7 +20,7 @@ import java.util.stream.Collectors;
 public class RelationController {
     private Logger LOGGER = LoggerFactory.getLogger(this.getClass());
     private List<Relation> allRelations = new ArrayList<>();
-    private String t;
+    private String transitiveRelation;
 
     @Autowired
     private RelationService relationService;
@@ -124,7 +124,8 @@ public class RelationController {
     public ResponseEntity<List<Relation>> getRelationInLowercase() {
         try {
             List<Relation> relations = new ArrayList<>();
-            relationService.getAllRelation().forEach(relations::add);
+            relations.addAll(0, relationService.getAllRelation());
+
             relations.forEach(e -> {
                 e.setW1(e.getW1().toLowerCase());
                 e.setW2(e.getW2().toLowerCase());
@@ -166,8 +167,6 @@ public class RelationController {
     @GetMapping("/pathSearch/{source}/{target}")
     public void pathSearch(@PathVariable String source, @PathVariable String target) {
         String next, path;
-        List<Relation> relations = new ArrayList<>();
-        relationService.getAllRelation().forEach(relations::add);
         getInverseRelation();
         LOGGER.info("Size of allRelation: " + allRelations.size());
 
@@ -183,7 +182,7 @@ public class RelationController {
                 while (getNumber(next) == 2) {
                     String medium = next;
                     next = getNextWord(source, next);
-                    t = getRelation(medium, source);
+                    transitiveRelation = getRelation(medium, source);
                     path = path + " ==(" + getRelation(medium, source) + ")=> " + next;
                     if (next.equals(target)) break;
                     source = medium;
@@ -200,7 +199,7 @@ public class RelationController {
     @GetMapping("/getTransitiveRelation/{source}/{target}")
     public void getTransitiveRelation(@PathVariable String source, @PathVariable String target) {
         pathSearch(source, target);
-        LOGGER.info("TransitiveRelation between " + source + " " + target + " is: " + t);
+        LOGGER.info("TransitiveRelation between " + source + " " + target + " is: " + transitiveRelation);
 
     }
 

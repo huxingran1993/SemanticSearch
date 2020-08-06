@@ -94,12 +94,12 @@ An error is reported to the user.
 Adding the inverse relation also give an error (and does not add the relation)
 
 If I have
-W1: son       W2: daughter  R: antonym
+W1: son W2: daughter  R: antonym
 
-then adding this
-W2: daugther  W2: son       R: antonym
+then adding this\
+W2: daughter W2: son   R: antonym
 
-would fail.
+would **fail**.
 
 
 
@@ -117,12 +117,10 @@ Execute path search
 
 On entering as source "street" and target "avenue" the path would be
 
-   street ==(synonym)=> road ==(related)=> avenue
+   **street ==(synonym)=> road ==(related)=> avenue**
 
-Note: you will need to also look at derived relations!
+_Note: you will need to also look at derived relations!_
 
-
-== One more to make it 10
 
 ### Task 10: Bonus task
 
