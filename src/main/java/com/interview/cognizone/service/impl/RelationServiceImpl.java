@@ -4,6 +4,7 @@ import com.interview.cognizone.model.Relation;
 import com.interview.cognizone.repository.RelationRepository;
 import com.interview.cognizone.service.RelationService;
 import org.springframework.stereotype.Service;
+
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -23,7 +24,7 @@ public class RelationServiceImpl implements RelationService {
     }
 
     @Override
-    public Relation createRelation(Relation relation){
+    public Relation createRelation(Relation relation) {
         return relationRepository.save(relation);
     }
 

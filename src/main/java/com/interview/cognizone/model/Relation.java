@@ -24,16 +24,16 @@ public class Relation {
     /**
      * Task 6: Limit allowed characters
      * */
-    @Pattern(regexp="^[A-Za-z ]*$",message = "Only characters from A to Z (both lower and uppercase) and space are allowed")
+    @Pattern(regexp = "^[A-Za-z ]*$", message = "Only characters from A to Z (both lower and uppercase) and space are allowed")
     private String W1;
 
     @Field("W2")
     @NotBlank(message = "W2 can not be empty")
-    @Pattern(regexp="^[A-Za-z ]*$",message = "Only characters from A to Z (both lower and uppercase) and space are allowed")
+    @Pattern(regexp = "^[A-Za-z ]*$", message = "Only characters from A to Z (both lower and uppercase) and space are allowed")
     private String W2;
 
     @Field("R")
     @NotBlank(message = "R can not be empty")
-    @Pattern(regexp="^[A-Za-z ]*$",message = "Only characters from A to Z (both lower and uppercase) and space are allowed")
+    @Pattern(regexp = "^[A-Za-z ]*$", message = "Only characters from A to Z (both lower and uppercase) and space are allowed")
     private String R;
 }
