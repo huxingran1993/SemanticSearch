@@ -1,12 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="5df25f71-c5be-44c3-a19a-20b57fc40702" name="Default Changelist" comment="fixed bugs">
+    <list default="true" id="5df25f71-c5be-44c3-a19a-20b57fc40702" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/interview/cognizone/controller/RelationController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/interview/cognizone/controller/RelationController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/interview/cognizone/model/Relation.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/interview/cognizone/model/Relation.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/interview/cognizone/service/RelationService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/interview/cognizone/service/RelationService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/interview/cognizone/service/impl/RelationServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/interview/cognizone/service/impl/RelationServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -52,7 +49,7 @@
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="android.sdk.path" value="D:/JAVA/Android/Sdk" />
     <property name="aspect.path.notification.shown" value="true" />
-    <property name="settings.editor.selected.configurable" value="AndroidSdkUpdater" />
+    <property name="settings.editor.selected.configurable" value="preferences.pluginManager" />
   </component>
   <component name="RunManager">
     <configuration name="CognizoneApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot">
@@ -89,7 +86,7 @@
       <workItem from="1596461009225" duration="5736000" />
       <workItem from="1596528645701" duration="38084000" />
       <workItem from="1596621665231" duration="7382000" />
-      <workItem from="1596700970087" duration="1925000" />
+      <workItem from="1596700970087" duration="4587000" />
     </task>
     <task id="LOCAL-00001" summary="initialization">
       <created>1596455583338</created>
@@ -217,7 +214,14 @@
       <option name="project" value="LOCAL" />
       <updated>1596633497998</updated>
     </task>
-    <option name="localTasksCounter" value="19" />
+    <task id="LOCAL-00019" summary="fixed bugs">
+      <created>1596703549304</created>
+      <option name="number" value="00019" />
+      <option name="presentableId" value="LOCAL-00019" />
+      <option name="project" value="LOCAL" />
+      <updated>1596703549304</updated>
+    </task>
+    <option name="localTasksCounter" value="20" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -253,10 +257,10 @@
       <screen x="0" y="0" width="2560" height="1400" />
     </state>
     <state x="395" y="0" key="#com.intellij.refactoring.rename.AutomaticRenamingDialog/0.0.2560.1400@0.0.2560.1400" timestamp="1596464797809" />
-    <state x="905" y="295" width="1092" height="811" key="CommitChangelistDialog2" timestamp="1596703152514">
+    <state x="905" y="295" width="1092" height="811" key="CommitChangelistDialog2" timestamp="1596703547319">
       <screen x="0" y="0" width="2560" height="1400" />
     </state>
-    <state x="905" y="295" width="1092" height="811" key="CommitChangelistDialog2/0.0.2560.1400@0.0.2560.1400" timestamp="1596703152514" />
+    <state x="905" y="295" width="1092" height="811" key="CommitChangelistDialog2/0.0.2560.1400@0.0.2560.1400" timestamp="1596703547319" />
     <state width="2561" height="363" key="GridCell.Tab.0.bottom" timestamp="1596633539907">
       <screen x="0" y="0" width="2560" height="1400" />
     </state>
@@ -289,14 +293,18 @@
       <screen x="0" y="0" width="2560" height="1400" />
     </state>
     <state width="2561" height="363" key="GridCell.Tab.1.right/0.0.2560.1400@0.0.2560.1400" timestamp="1596633539907" />
-    <state x="873" y="435" key="Vcs.Push.Dialog.v2" timestamp="1596633501003">
+    <state x="782" y="344" key="SettingsEditor" timestamp="1596703874055">
       <screen x="0" y="0" width="2560" height="1400" />
     </state>
-    <state x="873" y="435" key="Vcs.Push.Dialog.v2/0.0.2560.1400@0.0.2560.1400" timestamp="1596633501003" />
-    <state x="1090" y="619" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1596703529871">
+    <state x="782" y="344" key="SettingsEditor/0.0.2560.1400@0.0.2560.1400" timestamp="1596703874055" />
+    <state x="873" y="435" key="Vcs.Push.Dialog.v2" timestamp="1596703558488">
       <screen x="0" y="0" width="2560" height="1400" />
     </state>
-    <state x="1090" y="619" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/0.0.2560.1400@0.0.2560.1400" timestamp="1596703529871" />
+    <state x="873" y="435" key="Vcs.Push.Dialog.v2/0.0.2560.1400@0.0.2560.1400" timestamp="1596703558488" />
+    <state x="1090" y="619" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1596703696506">
+      <screen x="0" y="0" width="2560" height="1400" />
+    </state>
+    <state x="1090" y="619" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/0.0.2560.1400@0.0.2560.1400" timestamp="1596703696506" />
     <state x="1011" y="468" key="extract.method.dialog" timestamp="1596555146552">
       <screen x="0" y="0" width="2560" height="1400" />
     </state>
